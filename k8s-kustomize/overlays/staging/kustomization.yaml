@@ -1,0 +1,73 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - staging-tls-secret.yml
+  - pdb-user-service.yml
+  - pdb-campaign-service.yml
+  - pdb-appointment-service.yml
+  - pdb-analytics-service.yml
+
+patches:
+  # Set microservice deployments to 2 replicas
+  - target:
+      kind: Deployment
+      labelSelector: component=api
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+
+  # Staging domains + TLS
+  - target:
+      kind: Ingress
+      name: blood-donation-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: staging.api.blood-donation.local
+      - op: add
+        path: /spec/tls
+        value:
+          - hosts:
+              - staging.api.blood-donation.local
+            secretName: staging-tls-secret
+
+  - target:
+      kind: Ingress
+      name: frontend-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: staging.blood-donation.local
+      - op: add
+        path: /spec/tls
+        value:
+          - hosts:
+              - staging.blood-donation.local
+            secretName: staging-tls-secret
+
+  - target:
+      kind: Ingress
+      name: admin-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: staging.admin.blood-donation.local
+      - op: add
+        path: /spec/tls
+        value:
+          - hosts:
+              - staging.admin.blood-donation.local
+            secretName: staging-tls-secret
+
+images:
+  - name: hassanaym/bdon-user-service
+    newTag: staging
+  - name: hassanaym/bdon-campaign-service
+    newTag: staging
+  - name: hassanaym/bdon-appointment-service
+    newTag: staging
+  - name: hassanaym/bdon-analytics-service
+    newTag: staging
