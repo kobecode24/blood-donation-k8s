@@ -1,0 +1,49 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+patches:
+  # All Deployments -> 1 replica
+  - target:
+      kind: Deployment
+      labelSelector: component=api
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+
+  # Ingress dev domains
+  - target:
+      kind: Ingress
+      name: blood-donation-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev.api.blood-donation.local
+
+  - target:
+      kind: Ingress
+      name: frontend-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev.blood-donation.local
+
+  - target:
+      kind: Ingress
+      name: admin-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev.admin.blood-donation.local
+
+images:
+  - name: hassanaym/bdon-user-service
+    newTag: dev
+  - name: hassanaym/bdon-campaign-service
+    newTag: dev
+  - name: hassanaym/bdon-appointment-service
+    newTag: dev
+  - name: hassanaym/bdon-analytics-service
+    newTag: dev
