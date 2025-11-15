@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: campaign-service-config
+  namespace: blood-donation
+  labels:
+    app: campaign-service
+    component: api
+    tier: backend
+data:
+  NODE_ENV: "production"
+  PORT: "3002"
+  DB_HOST: "mysql-service.blood-donation-data.svc.cluster.local"
+  DB_PORT: "3306"
+  DB_NAME: "dondesang"
+  DB_USER: "blooduser"
+  CORS_ORIGIN: "https://blood-donation.local,https://admin.blood-donation.local"
+  LOG_LEVEL: "info"
+  LOG_FORMAT: "json"
