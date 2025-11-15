@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blood-donation
+  labels:
+    environment: production
+    project: blood-donation
+    tier: healthcare
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted
+  annotations:
+    kubernetes.io/managed-by: "devops-team"
+    compliance.healthcare/hipaa: "enabled"
