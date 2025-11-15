@@ -1,0 +1,85 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - prod-tls-secret.yml
+  - hpa-user-service.yml
+  - hpa-campaign-service.yml
+  - hpa-appointment-service.yml
+  - hpa-analytics-service.yml
+  - pdb-user-service.yml
+  - pdb-campaign-service.yml
+  - pdb-appointment-service.yml
+  - pdb-analytics-service.yml
+
+patches:
+  - target:
+      kind: Deployment
+      labelSelector: component=api
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+  - target:
+      kind: Deployment
+      labelSelector: component=api
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+  - target:
+      kind: Ingress
+      name: blood-donation-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: api.blood-donation.com
+      - op: add
+        path: /spec/tls
+        value:
+          - hosts:
+              - api.blood-donation.com
+            secretName: prod-tls-secret
+  - target:
+      kind: Ingress
+      name: frontend-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: blood-donation.com
+      - op: add
+        path: /spec/tls
+        value:
+          - hosts:
+              - blood-donation.com
+            secretName: prod-tls-secret
+  - target:
+      kind: Ingress
+      name: admin-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: admin.blood-donation.com
+      - op: add
+        path: /spec/tls
+        value:
+          - hosts:
+              - admin.blood-donation.com
+            secretName: prod-tls-secret
+
+images:
+  - name: hassanaym/bdon-user-service
+    newTag: 1.0.0
+  - name: hassanaym/bdon-campaign-service
+    newTag: 1.0.0
+  - name: hassanaym/bdon-appointment-service
+    newTag: 1.0.0
+  - name: hassanaym/bdon-analytics-service
+    newTag: 1.0.0
