@@ -1,0 +1,52 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # Namespaces
+  - ../../k8s/namespace/namespace.yml
+  - ../../k8s/namespace/data-namespace.yml
+
+  # ConfigMaps
+  - ../../k8s/configmaps/admin-frontend-html.yml
+  - ../../k8s/configmaps/admin-frontend-nginx-config.yml
+  - ../../k8s/configmaps/admin-service-config.yml
+  - ../../k8s/configmaps/analytics-service-config.yml
+  - ../../k8s/configmaps/appointment-service-config.yml
+  - ../../k8s/configmaps/campaign-service-config.yml
+  - ../../k8s/configmaps/donor-frontend-html.yml
+  - ../../k8s/configmaps/donor-frontend-nginx-config.yml
+  - ../../k8s/configmaps/user-service-config.yml
+
+  # Secrets
+  - ../../k8s/secrets/app-secret.yml
+  - ../../k8s/secrets/mysql-secret.yml
+
+  # Storage
+  - ../../k8s/storage/mysql-pv.yml
+  - ../../k8s/storage/mysql-pvc.yml
+
+  # Database
+  - ../../k8s/database/mysql-deployment.yml
+  - ../../k8s/database/mysql-service.yml
+
+  # Backend Services
+  - ../../k8s/backend-services/user-service-deployment.yml
+  - ../../k8s/backend-services/user-service-service.yml
+  - ../../k8s/backend-services/campaign-service-deployment.yml
+  - ../../k8s/backend-services/campaign-service-service.yml
+  - ../../k8s/backend-services/appointment-service-deployment.yml
+  - ../../k8s/backend-services/appointment-service-service.yml
+  - ../../k8s/backend-services/analytics-service-deployment.yml
+  - ../../k8s/backend-services/analytics-service-service.yml
+
+  # Frontend Services
+  - ../../k8s/frontend-services/donor-frontend-deployment.yml
+  - ../../k8s/frontend-services/donor-frontend-service.yml
+  - ../../k8s/frontend-services/admin-frontend-deployment.yml
+  - ../../k8s/frontend-services/admin-frontend-service.yml
+
+  # Ingress
+  - ../../k8s/ingress/ingress.yml
+  - ../../k8s/ingress/frontend-ingress.yml
+  - ../../k8s/ingress/admin-ingress.yml
+
