@@ -1,0 +1,127 @@
+# Kubernetes
+*.kubeconfig
+kubeconfig
+.kube/
+*.pem
+*.key
+*.crt
+*.csr
+
+# Environment files
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.vim/
+.emacs.d/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Helm
+Chart.lock
+charts/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+.directory
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Secrets (never commit real secrets)
+secrets/
+*-secret*.yml
+*-secret*.yaml
+.secrets/
+credentials.json
+config.json
+
+# Build artifacts
+dist/
+build/
+out/
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Local development
+local/
+.local/
+dev-local/
+
+# Certificates (self-signed for local dev)
+*.pem
+*.key
+*.crt
+*.csr
+certs/
+certificates/
+
+# Misc
+.versionrc.json
+CHANGELOG.md
+release-notes.md
